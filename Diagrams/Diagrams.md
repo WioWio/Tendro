@@ -1,1 +1,8 @@
-#
+# UML Diagrams
+1. [Диаграмма классов](#1)<br>
+2. [Диаграммы состояния](#2)<br>
+
+<a name="1"/>
+
+### 1. Диаграмма классов 
+![alt text](https://github.com/WioWio/Tendro/new/master/Diagrams/ClassDiagram.jpg)
