@@ -1,6 +1,7 @@
 # UML Diagrams
 1. [Диаграмма классов](#1)<br>
 2. [Диаграммы состояния](#2)<br>
+3. [Диаграмма развёртывания](#3)<br>
 
 <a name="1"/>
 
@@ -18,3 +19,9 @@
 ![Tabel](https://github.com/WioWio/Tendro/blob/master/Diagrams/Tabel.png "Tabel")
 #### Напоминание о вскрытии пакетов
 ![Alarm](https://github.com/WioWio/Tendro/blob/master/Diagrams/Alarm.png "Alarm")
+
+<a name="3"/>
+
+### 3. Диаграмма развёртывания
+![Deployment](https://github.com/WioWio/Tendro/blob/master/Diagrams/Deployment.png "Deployment")
+
