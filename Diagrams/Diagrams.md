@@ -6,6 +6,10 @@
 
 ### 1. Диаграмма классов 
 ![ClassDiagram](https://github.com/WioWio/Tendro/blob/master/Diagrams/ClassDiagram.png "ClassDiagram")
+#### Tender
+Класс с информацией о тендере и методы, высчитывающие удельные баллы
+#### TenderMember
+Класс с информацией об участинке тендера
 
 <a name="2"/>
 
