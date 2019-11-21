@@ -23,5 +23,5 @@
 <a name="3"/>
 
 ### 3. Диаграмма развёртывания
-![Deployment](https://github.com/WioWio/Tendro/blob/master/Diagrams/Deployment.png "Deployment")
+![Deployment](https://github.com/WioWio/Tendro/blob/master/Diagrams/Deployment.jpg "Deployment")
 
