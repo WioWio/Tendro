@@ -5,4 +5,12 @@
 <a name="1"/>
 
 ### 1. Диаграмма классов 
-![alt text](https://github.com/WioWio/Tendro/new/master/Diagrams/ClassDiagram.jpg)
+![ClassDiagram](https://github.com/WioWio/Tendro/blob/master/Diagrams/ClassDiagram.png "ClassDiagram")
+
+<a name="2"/>
+
+### 2. Диаграммы состояний 
+#### Таблица конкурсантов
+![Tabel](https://github.com/WioWio/Tendro/blob/master/Diagrams/Tabel.png "Tabel")
+#### Напоминание о вскрытии пакетов
+![Alarm](https://github.com/WioWio/Tendro/blob/master/Diagrams/Alarm.png "Alarm")
