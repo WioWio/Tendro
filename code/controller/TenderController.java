@@ -8,6 +8,6 @@ public class TenderController {
     private TenderTabel tenderTabel;
 
     public boolean countWinner() {
-        
+        return true;
     }
 }

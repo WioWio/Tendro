@@ -1,10 +1,13 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
+import view.MainView;
 
 public class Main extends Application {
+    private MainView mainView;
+
     @Override
     public void init() {
-
+        mainView = new MainView();
     }
 
     @Override
