@@ -15,7 +15,12 @@ public class Tender {
     private TenderMember winner1;
     private TenderMember winner2;
 
-    public ArrayList<Double> countPricePoints() {
+    public Tender(ArrayList<TenderMember> tenderMembers){
+        this.tenderMembers = tenderMembers;
+    }
+
+    public void countPricePoints() {
+        if (tenderMembers==null) return;
         ArrayList<Double> priceList = new ArrayList<>();
         for (TenderMember tM:tenderMembers){
             priceList.add(tM.getPrice());
@@ -28,17 +33,17 @@ public class Tender {
         }
         ArrayList<Double> pointsList = new ArrayList<>();
         double delta = worstPrice - bestPrice;
+        int index=0;
 
         for (double price:priceList){
-            if (price == bestPrice) pointsList.add(BEST_POINT);
-            else if(price == worstPrice) pointsList.add(WORST_POINT);
+            if (price == bestPrice) tenderMembers.get(index++).setPricePoint(BEST_POINT);
+            else if(price == worstPrice) tenderMembers.get(index++).setPricePoint(WORST_POINT);
             else {
                 double point = ((worstPrice - price)/delta)*10 + WORST_POINT;
-                pointsList.add(point);
+                tenderMembers.get(index++).setPricePoint(point);
             }
         }
 
-        return pointsList;
     }
 
     public void countDaysPoints() {
