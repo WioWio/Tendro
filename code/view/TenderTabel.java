@@ -1,5 +1,6 @@
 package view;
 
+import controller.TenderController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -17,6 +18,7 @@ public class TenderTabel extends TableView {
     final static int POINT_COLUMN_SIZE = 30;
     final static int CONDITION_K_COLUMN_SIZE = 50;
 
+    TenderController tenderController;
     ObservableList<TenderMember> list;
     //private TableColumn<TenderMember,Integer> indexCol;
     private TableColumn<TenderMember,String> nameCol;
@@ -31,8 +33,9 @@ public class TenderTabel extends TableView {
     private TableColumn<TenderMember,Double> conditionKPointCol;
     private TableColumn<TenderMember,Double> generalPointCol;
 
-    public TenderTabel() {
+    public TenderTabel(TenderController tenderController) {
         super();
+        this.tenderController = tenderController;
         this.initializeColumns();
         this.setEditable(true);
 
@@ -64,18 +67,14 @@ public class TenderTabel extends TableView {
         generalPointCol = new TableColumn<TenderMember,Double>("General");
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+        indexCol.setCellValueFactory(new PropertyValueFactory<>("index"));
 
 
         this.getColumns().addAll(indexCol,nameCol,priceCol,pricePointCol,priceKPointCol,daysCol,
                 daysPointCol,daysKPointCol,conditionCol,conditionPointCol,conditionKPointCol,generalPointCol);
 
-        getTenderMembersList();
+        list = tenderController.getTenderMemberList();
         this.setItems(list);
     }
 
-    private void getTenderMembersList(){
-        TenderMember member = new TenderMember("fgdsfsdf");
-        list = FXCollections.observableArrayList(member);
-    }
 }

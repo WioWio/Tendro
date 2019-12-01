@@ -1,17 +1,25 @@
 package view;
 
+import controller.TenderController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class MainView {
+    TenderController tenderController;
+
     static final double STANDART_WIDTH = 600;
     static final double STANDART_HEIGHT = 500;
 
     private Scene scene;
     private VBox mainLayout;
+
     private Label productLabel;
     private Label dateOpeningLabel;
     private Label ratioLabel;
@@ -20,18 +28,31 @@ public class MainView {
     private Label payConditionsLabel;
     private TextField productField;
 
+    private Button addButton;
+
     private TenderTabel tenderTabel;
 
-    public MainView(){
+    public MainView(TenderController tenderController){
+        this.tenderController = tenderController;
+
         productLabel = new Label("prod");
         dateOpeningLabel = new Label("dateOp");
 
         productField = new TextField();
 
-        tenderTabel = new TenderTabel();
+        tenderTabel = new TenderTabel(tenderController);
+
+        addButton = new Button("+");
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                tenderController.addNewTenderMember();
+            }
+        });
 
         mainLayout = new VBox();
-        mainLayout.getChildren().setAll(productLabel,productField,dateOpeningLabel,tenderTabel);
+        mainLayout.getChildren().setAll(productLabel,productField,dateOpeningLabel,tenderTabel,
+            addButton);
 
         scene = new Scene(mainLayout, STANDART_WIDTH, STANDART_HEIGHT);
     }
@@ -39,4 +60,6 @@ public class MainView {
     public Scene getScene(){
         return this.scene;
     }
+
+
 }
