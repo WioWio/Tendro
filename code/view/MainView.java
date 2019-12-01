@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class MainView {
-    static final double STANDART_WIDTH = 400;
+    static final double STANDART_WIDTH = 600;
     static final double STANDART_HEIGHT = 500;
 
     private Scene scene;
