@@ -29,6 +29,7 @@ public class MainView {
     private TextField productField;
 
     private Button addButton;
+    private Button countButton;
 
     private TenderTabel tenderTabel;
 
@@ -47,12 +48,21 @@ public class MainView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 tenderController.addNewTenderMember();
+                tenderTabel.refresh();
+            }
+        });
+
+        countButton = new Button("count");
+        countButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                tenderController.countWinner();
             }
         });
 
         mainLayout = new VBox();
         mainLayout.getChildren().setAll(productLabel,productField,dateOpeningLabel,tenderTabel,
-            addButton);
+            addButton,countButton);
 
         scene = new Scene(mainLayout, STANDART_WIDTH, STANDART_HEIGHT);
     }

@@ -3,10 +3,13 @@ package view;
 import controller.TenderController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import model.Tender;
 import model.TenderMember;
 
@@ -22,7 +25,7 @@ public class TenderTabel extends TableView {
     ObservableList<TenderMember> list;
     //private TableColumn<TenderMember,Integer> indexCol;
     private TableColumn<TenderMember,String> nameCol;
-    private TableColumn<TenderMember,Double> priceCol;
+    private TableColumn<TenderMember,String> priceCol;
     private TableColumn<TenderMember,Double> pricePointCol;
     private TableColumn<TenderMember,Double> priceKPointCol;
     private TableColumn<TenderMember,Integer> daysCol;
@@ -49,7 +52,18 @@ public class TenderTabel extends TableView {
         nameCol = new TableColumn<TenderMember,String>("Name");
         nameCol.setPrefWidth(NAME_COLUMN_SIZE);
         nameCol.setEditable(true);
-        priceCol = new TableColumn<TenderMember,Double>("Price");
+        priceCol = new TableColumn<TenderMember,String>("Price");
+
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        priceCol.setEditable(true);
+        priceCol.setOnEditCommit((TableColumn.CellEditEvent<TenderMember,String> event) -> {
+            TablePosition<TenderMember,String> pos = event.getTablePosition();
+            double newPrice = Double.parseDouble(event.getNewValue());
+            int row = pos.getRow();
+            TenderMember member = event.getTableView().getItems().get(row);
+            member.setPrice(newPrice);
+        });
+
         pricePointCol = new TableColumn<TenderMember,Double>("Price Point");
         pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
         priceKPointCol = new  TableColumn<TenderMember,Double>("Price PointK");
@@ -68,11 +82,16 @@ public class TenderTabel extends TableView {
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         indexCol.setCellValueFactory(new PropertyValueFactory<>("index"));
-
+        //priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        pricePointCol.setCellValueFactory(new PropertyValueFactory<>("pricePoint"));
 
         this.getColumns().addAll(indexCol,nameCol,priceCol,pricePointCol,priceKPointCol,daysCol,
                 daysPointCol,daysKPointCol,conditionCol,conditionPointCol,conditionKPointCol,generalPointCol);
 
+        refresh();
+    }
+
+    public void refresh(){
         list = tenderController.getTenderMemberList();
         this.setItems(list);
     }
