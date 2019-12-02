@@ -1,6 +1,9 @@
 package model;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
+
 
 public class Tender {
     static final double BEST_POINT = 10;
@@ -11,19 +14,23 @@ public class Tender {
     private double kPrice;
     private double kDays;
     private double kCondition;
-    private ArrayList<TenderMember> tenderMembers;
+    private ObservableList<TenderMember> tenderMembers;
     private TenderMember winner1;
     private TenderMember winner2;
 
-    public Tender(ArrayList<TenderMember> tenderMembers){
+    public Tender(ObservableList<TenderMember> tenderMembers){
         this.tenderMembers = tenderMembers;
     }
 
     public void countPricePoints() {
-        if (tenderMembers==null) return;
-        ArrayList<Double> priceList = new ArrayList<>();
+        if (tenderMembers==null) {
+            System.out.print("no thing to count");
+            return;
+        }
+
+        ArrayList<Double> priceList = new ArrayList<Double>();
         for (TenderMember tM:tenderMembers){
-            priceList.add(tM.getPrice());
+            priceList.add(Double.parseDouble(tM.getPrice()));
         }
         double bestPrice = priceList.get(0);
         double worstPrice = bestPrice;
@@ -42,6 +49,10 @@ public class Tender {
                 double point = ((worstPrice - price)/delta)*10 + WORST_POINT;
                 tenderMembers.get(index++).setPricePoint(point);
             }
+        }
+        for (TenderMember tM:tenderMembers){
+            System.out.print(tM.getPricePoint());
+
         }
 
     }
@@ -65,4 +76,5 @@ public class Tender {
     public void countConditionK() {
 
     }
+
 }

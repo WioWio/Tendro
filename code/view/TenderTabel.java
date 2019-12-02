@@ -15,14 +15,14 @@ import model.TenderMember;
 
 import java.util.ArrayList;
 
-public class TenderTabel extends TableView {
+public class TenderTabel extends TableView<TenderMember> {
     final static int INDEX_COLUMN_SIZE = 20;
     final static int NAME_COLUMN_SIZE = 100;
     final static int POINT_COLUMN_SIZE = 30;
     final static int CONDITION_K_COLUMN_SIZE = 50;
 
     TenderController tenderController;
-    ObservableList<TenderMember> list;
+    private ObservableList<TenderMember> list;
     //private TableColumn<TenderMember,Integer> indexCol;
     private TableColumn<TenderMember,String> nameCol;
     private TableColumn<TenderMember,String> priceCol;
@@ -52,8 +52,10 @@ public class TenderTabel extends TableView {
         nameCol = new TableColumn<TenderMember,String>("Name");
         nameCol.setPrefWidth(NAME_COLUMN_SIZE);
         nameCol.setEditable(true);
+
         priceCol = new TableColumn<TenderMember,String>("Price");
 
+      priceCol.setCellValueFactory(new PropertyValueFactory<TenderMember,String>("price"));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn());
         priceCol.setEditable(true);
         priceCol.setOnEditCommit((TableColumn.CellEditEvent<TenderMember,String> event) -> {
@@ -62,10 +64,13 @@ public class TenderTabel extends TableView {
             int row = pos.getRow();
             TenderMember member = event.getTableView().getItems().get(row);
             member.setPrice(newPrice);
+            System.out.print(member.getIndex());
+            System.out.print(member.getPrice());
+
         });
 
         pricePointCol = new TableColumn<TenderMember,Double>("Price Point");
-        pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        //pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
         priceKPointCol = new  TableColumn<TenderMember,Double>("Price PointK");
         daysCol = new TableColumn<TenderMember,Integer>("Days");
         daysPointCol = new  TableColumn<TenderMember,Double>("Days Point");
@@ -82,18 +87,19 @@ public class TenderTabel extends TableView {
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         indexCol.setCellValueFactory(new PropertyValueFactory<>("index"));
-        //priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        pricePointCol.setCellValueFactory(new PropertyValueFactory<>("pricePoint"));
+
+        pricePointCol.setCellValueFactory(new PropertyValueFactory<TenderMember,Double>(
+                "pricePoint"));
 
         this.getColumns().addAll(indexCol,nameCol,priceCol,pricePointCol,priceKPointCol,daysCol,
                 daysPointCol,daysKPointCol,conditionCol,conditionPointCol,conditionKPointCol,generalPointCol);
 
-        refresh();
+      list = tenderController.getTenderMemberList();
+      this.setItems(list);
     }
 
-    public void refresh(){
-        list = tenderController.getTenderMemberList();
-        this.setItems(list);
+    @Override
+  public void refresh(){
+      this.setItems(list);
     }
-
 }
