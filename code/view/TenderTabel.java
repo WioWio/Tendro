@@ -23,25 +23,14 @@ public class TenderTabel extends TableView<TenderMember> {
 
     TenderController tenderController;
     private ObservableList<TenderMember> list;
-    //private TableColumn<TenderMember,Integer> indexCol;
-    private TableColumn<TenderMember,String> nameCol;
-    private TableColumn<TenderMember,String> priceCol;
-    private TableColumn<TenderMember,Double> pricePointCol;
-    private TableColumn<TenderMember,Double> priceKPointCol;
-    private TableColumn<TenderMember,Integer> daysCol;
-    private TableColumn<TenderMember,Double> daysPointCol;
-    private TableColumn<TenderMember,Double> daysKPointCol;
-    private TableColumn<TenderMember,String> conditionCol;
-    private TableColumn<TenderMember,Double> conditionPointCol;
-    private TableColumn<TenderMember,Double> conditionKPointCol;
-    private TableColumn<TenderMember,Double> generalPointCol;
 
     public TenderTabel(TenderController tenderController) {
         super();
         this.tenderController = tenderController;
         this.initializeColumns();
         this.setEditable(true);
-
+        list = tenderController.getTenderMemberList();
+        this.setItems(list);
 
     }
 
@@ -49,13 +38,23 @@ public class TenderTabel extends TableView<TenderMember> {
         TableColumn<TenderMember,Integer> indexCol = new TableColumn<TenderMember,Integer>("Index");
         indexCol.setResizable(false);
         indexCol.setPrefWidth(INDEX_COLUMN_SIZE);
-        nameCol = new TableColumn<TenderMember,String>("Name");
+        indexCol.setCellValueFactory(new PropertyValueFactory<>("index"));
+
+        TableColumn<TenderMember,String> nameCol = new TableColumn<TenderMember,String>("Name");
         nameCol.setPrefWidth(NAME_COLUMN_SIZE);
         nameCol.setEditable(true);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameCol.setOnEditCommit((TableColumn.CellEditEvent<TenderMember,String> event) -> {
+          TablePosition<TenderMember,String> pos = event.getTablePosition();
+          String newName = event.getNewValue();
+          int row = pos.getRow();
+          TenderMember member = event.getTableView().getItems().get(row);
+          member.setName(newName);
+        });
 
-        priceCol = new TableColumn<TenderMember,String>("Price");
-
-      priceCol.setCellValueFactory(new PropertyValueFactory<TenderMember,String>("price"));
+        TableColumn<TenderMember,String> priceCol = new TableColumn<TenderMember,String>("Price");
+        priceCol.setCellValueFactory(new PropertyValueFactory<TenderMember,String>("price"));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn());
         priceCol.setEditable(true);
         priceCol.setOnEditCommit((TableColumn.CellEditEvent<TenderMember,String> event) -> {
@@ -64,42 +63,70 @@ public class TenderTabel extends TableView<TenderMember> {
             int row = pos.getRow();
             TenderMember member = event.getTableView().getItems().get(row);
             member.setPrice(newPrice);
-            System.out.print(member.getIndex());
-            System.out.print(member.getPrice());
-
         });
 
-        pricePointCol = new TableColumn<TenderMember,Double>("Price Point");
-        //pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
-        priceKPointCol = new  TableColumn<TenderMember,Double>("Price PointK");
-        daysCol = new TableColumn<TenderMember,Integer>("Days");
-        daysPointCol = new  TableColumn<TenderMember,Double>("Days Point");
-        daysKPointCol = new TableColumn<TenderMember,Double>("KPoint");
-        conditionCol = new TableColumn<TenderMember,String>("Condition");
+        TableColumn<TenderMember,Double> pricePointCol = new TableColumn<TenderMember,Double>(
+               "Price Point");
+        pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(pricePointCol,"pricePoint");
+
+        TableColumn<TenderMember,Double> priceKPointCol = new  TableColumn<TenderMember,Double>(
+               "Price PointK");
+        priceKPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(priceKPointCol,"priceKPoint");
+
+        TableColumn<TenderMember,String> daysCol = new TableColumn<>("Days");
+        daysCol.setCellValueFactory(new PropertyValueFactory<TenderMember,String>("days"));
+        daysCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        daysCol.setEditable(true);
+        daysCol.setOnEditCommit((TableColumn.CellEditEvent<TenderMember,String> event) -> {
+        TablePosition<TenderMember,String> pos = event.getTablePosition();
+        int newDays = Integer.parseInt(event.getNewValue());
+        int row = pos.getRow();
+        TenderMember member = event.getTableView().getItems().get(row);
+        member.setDays(newDays);
+      });
+
+        TableColumn<TenderMember,Double> daysPointCol = new  TableColumn<TenderMember,Double>(
+               "Days Point");
+        daysPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(daysPointCol,"daysPoint");
+
+        TableColumn<TenderMember,Double> daysKPointCol = new TableColumn<TenderMember,Double>(
+               "KPoint");
+        daysKPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(daysKPointCol,"daysKPoint");
+
+        TableColumn<TenderMember,String> conditionCol = new TableColumn<TenderMember,String>(
+               "Condition");
         TableColumn<TenderMember,Integer> prePayPrecentCol =
                 new TableColumn<TenderMember,Integer>("preP prec");
         TableColumn<TenderMember,Integer> prePayDaysCol =
                 new TableColumn<TenderMember,Integer>("preP days");
         conditionCol.getColumns().addAll(prePayDaysCol,prePayPrecentCol);
-        conditionPointCol = new TableColumn<TenderMember,Double>("Con po");
-        conditionKPointCol = new TableColumn<TenderMember,Double>("con poK");
-        generalPointCol = new TableColumn<TenderMember,Double>("General");
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        indexCol.setCellValueFactory(new PropertyValueFactory<>("index"));
+        TableColumn<TenderMember,Double> conditionPointCol = new TableColumn<TenderMember,Double>(
+               "Con po");
+        conditionPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(conditionPointCol,"conditionPoint");
 
-        pricePointCol.setCellValueFactory(new PropertyValueFactory<TenderMember,Double>(
-                "pricePoint"));
+        TableColumn<TenderMember,Double> conditionKPointCol =
+               new TableColumn<TenderMember,Double>("con poK");
+        conditionKPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(conditionKPointCol,"conditionKPoint");
+
+        TableColumn<TenderMember,Double> generalPointCol = new TableColumn<TenderMember,Double>(
+               "General");
+        generalPointCol.setPrefWidth(POINT_COLUMN_SIZE);
+        setPointFactory(generalPointCol,"generalPoint");
 
         this.getColumns().addAll(indexCol,nameCol,priceCol,pricePointCol,priceKPointCol,daysCol,
-                daysPointCol,daysKPointCol,conditionCol,conditionPointCol,conditionKPointCol,generalPointCol);
+              daysPointCol,daysKPointCol,conditionCol,conditionPointCol,conditionKPointCol,generalPointCol);
 
-      list = tenderController.getTenderMemberList();
-      this.setItems(list);
     }
 
-    @Override
-  public void refresh(){
-      this.setItems(list);
+    private void setPointFactory(TableColumn pointCol, String nameCol){
+      pointCol.setCellValueFactory(new PropertyValueFactory<TenderMember,Double>(
+              nameCol));
     }
 }
