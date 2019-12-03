@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 
 public class Tender {
-    static final double BEST_POINT = 10;
-    static final double WORST_POINT = 1;
+     double BEST_POINT = 10;
+     double WORST_POINT = 1;
 
     private String name;
     private String product;
@@ -78,6 +78,7 @@ public class Tender {
                 double point = ((worstDays - days)/delta)*10 + WORST_POINT;
                 tenderMembers.get(index++).setDaysPoint(point);
             }
+            System.out.print(tenderMembers.get(index-1).getDaysPoint());
         }
     }
 
@@ -87,9 +88,8 @@ public class Tender {
 
     public void countPriceK() {
         if (tenderMembers==null) {return;}
-        for (TenderMember tM:tenderMembers){
-            double kPoint = tM.getPricePoint() * kPrice;
-            tM.setPriceKPoint(kPoint);
+        for (int i=0;i<tenderMembers.size();i++){
+          tenderMembers.get(i).setPriceKPoint(tenderMembers.get(i).getPricePoint()*kPrice);
         }
     }
 

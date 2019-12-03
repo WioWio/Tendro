@@ -13,7 +13,7 @@ public class TenderMember {
     private DoubleProperty pricePoint;
     private DoubleProperty priceKPoint;
     private Integer days=0;
-    private DoubleProperty daysPoint;
+    private SimpleDoubleProperty daysPoint;
     private DoubleProperty daysKPoint;
     private int prePayPrecent;
     private int prePayDays;
@@ -51,7 +51,7 @@ public class TenderMember {
 
     public DoubleProperty pricePointProperty() { return pricePoint; }
     public DoubleProperty priceKPointProperty() { return priceKPoint; }
-    public DoubleProperty daysPointProperty() { return daysPoint; }
+    public SimpleDoubleProperty daysPointProperty() { return daysPoint; }
     public DoubleProperty daysKPointProperty() { return daysKPoint; }
     public DoubleProperty conditionPointProperty() { return conditionPoint; }
     public DoubleProperty conditionKPointProperty() { return conditionKPoint; }
@@ -62,8 +62,8 @@ public class TenderMember {
     public void setPricePoint(double point) { this.pricePoint.set(point); }
     public void setPriceKPoint(double point) { this.priceKPoint.set(point); }
     public void setDays(int days) { this.days = days; }
-    public void setDaysPoint(double point) { this.priceKPoint.set(point); }
-    public void setDaysKPoint(double point) { this.priceKPoint.set(point); }
+    public void setDaysPoint(double point) { this.daysPoint.set(point); }
+    public void setDaysKPoint(double point) { this.daysKPoint.set(point); }
     public void setConditionPoint(double point) { this.conditionPoint.set(point); }
     public void setConditionKPoint(double point) { this.conditionKPoint.set(point); }
     public void setGeneralPoint(double point) { this.generalPoint.set(point); }

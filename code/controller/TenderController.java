@@ -11,25 +11,28 @@ import java.util.ArrayList;
 public class TenderController {
     private Tender tender;
     private TenderTabel tenderTabel;
-    private ArrayList<TenderMember> tenderMemberArrayList;
+    private ObservableList<TenderMember> tenderMemberList;
 
     public TenderController(){
-        tenderMemberArrayList = new ArrayList<TenderMember>();
-        tender = new Tender(tenderMemberArrayList);
+        tenderMemberList = FXCollections.observableArrayList();
+        tender = new Tender(tenderMemberList);
     }
 
     public void addNewTenderMember(){
-        tenderMemberArrayList.add(new TenderMember());
+        tenderMemberList.add(new TenderMember());
     }
 
     public ObservableList<TenderMember> getTenderMemberList(){
-        return FXCollections.observableArrayList(tenderMemberArrayList);
+        return tenderMemberList;
     }
 
 
-    public boolean countWinner() {
+    public void countWinner() {
+      tender.countDaysPoints();
         tender.countPricePoints();
-        tenderTabel.refresh();
-        return true;
+        tender.countPriceK();
+        tender.countDaysK();
+        tender.countGeneralPoints();
     }
+
 }

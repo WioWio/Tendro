@@ -1,6 +1,7 @@
 package view;
 
 import controller.TenderController;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,25 +14,21 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import model.Tender;
 import model.TenderMember;
 
+import javax.management.ListenerNotFoundException;
 import java.util.ArrayList;
 
 public class TenderTabel extends TableView<TenderMember> {
-    final static int INDEX_COLUMN_SIZE = 20;
-    final static int NAME_COLUMN_SIZE = 100;
-    final static int POINT_COLUMN_SIZE = 30;
-    final static int CONDITION_K_COLUMN_SIZE = 50;
+    private final static int INDEX_COLUMN_SIZE = 20;
+    private final static int NAME_COLUMN_SIZE = 100;
+    private final static int POINT_COLUMN_SIZE = 30;
+    private final static int CONDITION_K_COLUMN_SIZE = 50;
 
-    TenderController tenderController;
-    private ObservableList<TenderMember> list;
-
-    public TenderTabel(TenderController tenderController) {
+  public TenderTabel(TenderController tenderController) {
         super();
-        this.tenderController = tenderController;
-        this.initializeColumns();
+    this.initializeColumns();
         this.setEditable(true);
-        list = tenderController.getTenderMemberList();
+        ObservableList<TenderMember> list = tenderController.getTenderMemberList();
         this.setItems(list);
-
     }
 
     private void initializeColumns(){
@@ -51,6 +48,7 @@ public class TenderTabel extends TableView<TenderMember> {
           int row = pos.getRow();
           TenderMember member = event.getTableView().getItems().get(row);
           member.setName(newName);
+
         });
 
         TableColumn<TenderMember,String> priceCol = new TableColumn<TenderMember,String>("Price");
@@ -70,8 +68,8 @@ public class TenderTabel extends TableView<TenderMember> {
         pricePointCol.setPrefWidth(POINT_COLUMN_SIZE);
         setPointFactory(pricePointCol,"pricePoint");
 
-        TableColumn<TenderMember,Double> priceKPointCol = new  TableColumn<TenderMember,Double>(
-               "Price PointK");
+        TableColumn<TenderMember,Double> priceKPointCol = new TableColumn<TenderMember,Double>(
+               "Price KPoint");
         priceKPointCol.setPrefWidth(POINT_COLUMN_SIZE);
         setPointFactory(priceKPointCol,"priceKPoint");
 
@@ -85,12 +83,16 @@ public class TenderTabel extends TableView<TenderMember> {
         int row = pos.getRow();
         TenderMember member = event.getTableView().getItems().get(row);
         member.setDays(newDays);
+
       });
 
         TableColumn<TenderMember,Double> daysPointCol = new  TableColumn<TenderMember,Double>(
                "Days Point");
         daysPointCol.setPrefWidth(POINT_COLUMN_SIZE);
-        setPointFactory(daysPointCol,"daysPoint");
+        daysPointCol.setEditable(true);
+        //setPointFactory(daysPointCol,"daysPoint");
+      daysPointCol.setCellValueFactory(new PropertyValueFactory<TenderMember,Double>("daysPoint"));
+
 
         TableColumn<TenderMember,Double> daysKPointCol = new TableColumn<TenderMember,Double>(
                "KPoint");

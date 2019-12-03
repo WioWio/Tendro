@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import model.TenderMember;
 
 public class MainView {
     TenderController tenderController;
@@ -48,7 +49,7 @@ public class MainView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 tenderController.addNewTenderMember();
-                tenderTabel.refresh();
+                //tenderTabel.refresh();
             }
         });
 
