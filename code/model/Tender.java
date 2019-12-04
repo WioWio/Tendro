@@ -1,6 +1,7 @@
 package model;
 
 import javafx.collections.ObservableList;
+import view.TenderTabel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,16 +10,16 @@ import java.util.Timer;
 
 
 public class Tender {
-  private static final double BEST_POINT = 10;
-  private static final double WORST_POINT = 1;
+  private static final double BEST_POINT = 10.0;
+  private static final double WORST_POINT = 1.0;
   private static final double REFINANCING_STATE_NATIONAL_BANK = 0.9;
 
   private Calendar openingTime;
   private String name="unnamed";
   private String product;
-  private double kPrice;
-  private double kDays;
-  private double kCondition;
+  private double kPrice=0;
+  private double kDays=0;
+  private double kCondition=0;
   private ObservableList<TenderMember> tenderMembers;
   private TenderMember winner1;
   private TenderMember winner2;
@@ -31,12 +32,11 @@ public class Tender {
   public void setkDays(double kDays) { this.kDays = kDays; }
   public void setkCondition(double kCondition) { this.kCondition = kCondition; }
   public void setName(String name) { this.name=name; }
+  public TenderMember getWinner1() { return this.winner1; }
+  public TenderMember getWinner2() {return this.winner2; }
 
   public void countPricePoints() {
-    if (tenderMembers == null) {
-      System.out.print("nothing to count");
-      return;
-    }
+
 
     ArrayList<Double> priceList = new ArrayList<Double>();
     for (TenderMember tM : tenderMembers) {
@@ -56,17 +56,13 @@ public class Tender {
       if (price == bestPrice) tenderMembers.get(index++).setPricePoint(BEST_POINT);
       else if (price == worstPrice) tenderMembers.get(index++).setPricePoint(WORST_POINT);
       else {
-        double point = ((worstPrice - price) / delta) * 9 + WORST_POINT;
+        double point = ((worstPrice - price) / delta) * 9.0 + WORST_POINT;
         tenderMembers.get(index++).setPricePoint(point);
       }
     }
   }
 
   public void countDaysPoints() {
-    if (tenderMembers == null) {
-      return;
-    }
-
     ArrayList<Integer> daysList = new ArrayList<Integer>();
     for (TenderMember tM : tenderMembers) {
       daysList.add(Integer.parseInt(tM.getDays()));
@@ -78,17 +74,16 @@ public class Tender {
       if (days > worstDays) worstDays = days;
     }
     ArrayList<Double> pointsList = new ArrayList<>();
-    int delta = worstDays - bestDays;
+    double delta = worstDays - bestDays;
     int index = 0;
 
     for (int days : daysList) {
       if (days == bestDays) tenderMembers.get(index++).setDaysPoint(BEST_POINT);
       else if (days == worstDays) tenderMembers.get(index++).setDaysPoint(WORST_POINT);
       else {
-        double point = ((worstDays - days) / delta) * 9 + WORST_POINT;
+        double point = (((double)(worstDays - days) / delta) * 9.0) + WORST_POINT;
         tenderMembers.get(index++).setDaysPoint(point);
       }
-      System.out.print(tenderMembers.get(index - 1).getDaysPoint());
     }
   }
 
@@ -149,5 +144,35 @@ public class Tender {
     for (TenderMember tM : tenderMembers) {
       tM.setGeneralPoint(tM.getPriceKPoint() + tM.getDaysKPoint() + tM.getConditionKPoint());
     }
+  }
+
+  public void countWinners(){
+    double bestPoint = tenderMembers.get(0).getGeneralPoint();
+    TenderMember winner1 = tenderMembers.get(0);
+    TenderMember winner2= null;
+    for (TenderMember tM:tenderMembers){
+      if (tM.getGeneralPoint()>bestPoint) {
+        bestPoint = tM.getGeneralPoint();
+        winner1 = tM;
+      }
+    }
+    if (tenderMembers.size()>1){
+      if (tenderMembers.get(0).equals(winner1)){
+        winner2 = tenderMembers.get(1);
+        bestPoint = winner2.getGeneralPoint();
+      } else{
+        winner2 = tenderMembers.get(0);
+        bestPoint = winner2.getGeneralPoint();
+      }
+      for (TenderMember tM:tenderMembers){
+        if (!tM.equals(winner1) && tM.getGeneralPoint()>bestPoint) {
+          winner2 = tM;
+          bestPoint = tM.getGeneralPoint();
+        }
+      }
+    }
+
+    this.winner1 = winner1;
+    this.winner2 = winner2;
   }
 }

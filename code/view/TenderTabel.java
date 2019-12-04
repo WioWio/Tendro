@@ -23,7 +23,7 @@ public class TenderTabel extends TableView<TenderMember> {
     private final static int INDEX_COLUMN_SIZE = 20;
     private final static int NAME_COLUMN_SIZE = 200;
     private final static int POINT_COLUMN_SIZE = 50;
-    private final static int CONDITION_COLUMN_SIZE = 170;
+    private final static int CONDITION_COLUMN_SIZE = 180;
 
     private TenderController tenderController;
 

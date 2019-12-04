@@ -15,9 +15,10 @@ public class OpeningTask extends TimerTask {
   @Override
   public void run() {
     String text = "Через 15 минут вскрытие пакетов по тендеру " + tenderName;
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setContentText(text);
-    alert.getButtonTypes().set(1, ButtonType.OK);
-    alert.showAndWait();
+    System.out.print(text);
+    //Alert alert = new Alert(Alert.AlertType.ERROR);
+    //alert.setContentText(text);
+    //alert.getButtonTypes().set(1, ButtonType.OK);
+    //alert.showAndWait();
   }
 }

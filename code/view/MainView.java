@@ -40,7 +40,7 @@ public class MainView {
     private void buildScene(){
       Label productLabel = new Label("Название тендера: ");
       TextField productField = new TextField();
-      productField.setMaxWidth(STANDART_NAME_WIDTH);
+      productField.setPrefWidth(STANDART_NAME_WIDTH);
       productField.setOnKeyPressed(keyEvent -> {
         if (keyEvent.getCode() == KeyCode.ENTER){
           tenderController.setProductName(productField.getText());
@@ -91,8 +91,11 @@ public class MainView {
       countButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseEvent) {
+          if (tenderController.getTenderMemberList().size() == 0) { return; }
+
           tenderController.setRatio(ratiosInput);
           tenderController.countWinner();
+          winners.getChildren().clear();
           HBox winner1 = new HBox();
           winner1.getChildren().addAll(new Label("ПОБЕДИТЕЛЬ 1: "),
                   new Label(tenderController.getWinner1().getName()));

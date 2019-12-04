@@ -19,8 +19,11 @@ public class RatiosInput extends HBox {
     Label daysLabel = new Label(" срока выполнения ");
     Label conditionLabel = new Label(" условий оплаты ");
     priceK = new TextField();
+    priceK.setText("0.6");
     daysK = new TextField();
+    daysK.setText("0.1");
     conditionK = new TextField();
+    conditionK.setText("0.3");
     priceK.setPrefWidth(STANDART_RATIO_WIDTH);
     daysK.setPrefWidth(STANDART_RATIO_WIDTH);
     conditionK.setPrefWidth(STANDART_RATIO_WIDTH);
