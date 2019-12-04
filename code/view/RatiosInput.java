@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 public class RatiosInput extends HBox {
-  private final static double STANDART_RATIO_WIDTH = 20;
+  private final static double STANDART_RATIO_WIDTH = 40;
 
   private TextField priceK;
   private TextField daysK;

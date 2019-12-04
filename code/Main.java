@@ -1,5 +1,6 @@
 import controller.TenderController;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import view.MainView;
 
@@ -18,8 +19,10 @@ public class Main extends Application {
     primaryStage.setTitle("Tendro");
     primaryStage.setResizable(true);
     primaryStage.setScene(mainView.getScene());
+    primaryStage.setResizable(false);
     primaryStage.show();
   }
+
 
   public static void main(String[] args) {
     launch(args);
