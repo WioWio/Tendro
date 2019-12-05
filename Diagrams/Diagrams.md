@@ -2,6 +2,7 @@
 1. [Диаграмма классов](#1)<br>
 2. [Диаграммы состояния](#2)<br>
 3. [Диаграмма развёртывания](#3)<br>
+4. [Диаграмма использования](#4)<br>
 
 <a name="1"/>
 
@@ -24,4 +25,7 @@
 
 ### 3. Диаграмма развёртывания
 ![Deployment](https://github.com/WioWio/Tendro/blob/master/Diagrams/Deployment.jpg "Deployment")
+
+### 4. Диаграмма использования
+![Use Case](https://github.com/WioWio/Tendro/blob/master/Diagrams/UseCaseDiagram.png "Use Case")
 
